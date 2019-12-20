@@ -674,6 +674,27 @@ function script() {
     return DOKU_BASE.DOKU_SCRIPT;
 }
 
+// allow user in conf htmlok_user phpok_user to use <html> <php> syntax
+// -- gholk
+function userIsHtmlPhpOk($text) {
+    global $INPUT, $USERINFO, $conf;
+    $user = $INPUT->server->str('REMOTE_USER');
+    $groups = (array) $USERINFO['grps'];
+    if (stripos($text, "<html>") !== false) {
+        $allow_html_user = $conf['htmlok_user'];
+        if (!auth_isMember($allow_html_user, $user, $groups)) {
+            return false;
+        }
+    }
+    if (stripos($text, "<php>") !== false) {
+        $allow_php_user = $conf['phpok_user'];
+        if (!auth_isMember($allow_php_user, $user, $groups)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 /**
  * Spamcheck against wordlist
  *
@@ -715,6 +736,8 @@ function checkwordblock($text = '') {
 
     // we prepare the text a tiny bit to prevent spammers circumventing URL checks
     $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i', '\1http://\2 \2\3', $text);
+
+    if(!userIsHtmlPhpOk($text)) return true; // gholk
 
     $wordblocks = getWordblocks();
     // how many lines to read at once (to work around some PCRE limits)
