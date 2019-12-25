@@ -1,0 +1,5 @@
+.dokuwiki a.urlextern[href*="nctu.edu.tw"] {
+	background-image: 
+	/* url(https://www.nctu.edu.tw/templates/nctunewweb/favicon.ico); */
+	url(../../images/interwiki/nctu.png);
+}
