@@ -552,8 +552,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function php($text, $wrapper = 'code') {
         global $conf;
+	global $INFO;
 
-        if($conf['phpok']) {
+        if($conf['phpok'] and !$INFO['rev']) {
             ob_start();
             eval($text);
             $this->doc .= ob_get_contents();
@@ -585,8 +586,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function html($text, $wrapper = 'code') {
         global $conf;
+	global $INFO;
 
-        if($conf['htmlok']) {
+        if($conf['htmlok'] and !$INFO['rev']) {
             $this->doc .= $text;
         } else {
             $this->doc .= p_xhtml_cached_geshi($text, 'html4strict', $wrapper);
