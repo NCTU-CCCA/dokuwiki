@@ -350,7 +350,7 @@ $lang['hours']                 = '%d hours ago';
 $lang['minutes']               = '%d minutes ago';
 $lang['seconds']               = '%d seconds ago';
 
-$lang['wordblock']             = 'Your change was not saved because it contains blocked text (spam).';
+$lang['wordblock']             = 'Your change was not saved because it contains blocked text (spam), or the change contain html php code.';
 
 $lang['media_uploadtab']       = 'Upload';
 $lang['media_searchtab']       = 'Search';
